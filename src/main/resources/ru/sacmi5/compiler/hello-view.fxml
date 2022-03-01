@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button mnemonicParsing="false" text="Button" />
+        </items>
+      </ToolBar>
+      <HBox prefHeight="48.0" prefWidth="600.0" spacing="4.0">
+         <children>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="48.0" prefWidth="48.0" text="Button" />
+            <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="48.0" text="Button" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+         </padding></HBox>
+       <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+           <Tab text="HUETA">
+               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                   <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0"
+                             prefWidth="200.0"/>
+                   <TextArea maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0"
+                             prefWidth="200.0"/>
+               </VBox>
+           </Tab>
+       </TabPane>
+   </children>
+</VBox>
