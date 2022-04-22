@@ -160,5 +160,9 @@ class CompilerController : Controller() {
         if (state != State.Semicolon) {
             addError("Декларация переменных не завершена")
         }
+
+        if (errorsIndex.isEmpty()) {
+            addError("Ошибок не найдено. Все хорошо! :)")
+        }
     }
 }
