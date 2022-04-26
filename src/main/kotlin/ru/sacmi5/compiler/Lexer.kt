@@ -87,35 +87,29 @@ fun analyze(state: State, token: Token): State {
         State.Start -> {
             if (token.value == "var") return State.Var
             else getErrorMessage("ключевое слово 'var'", token.type, token.index)
-//            else throw IllegalArgumentException("Expected: keyword 'var', got '${token.value}' at position ${token.index}")
         }
         State.Var, State.Delimiter -> {
             if (token.type == TokenType.Identifier) return State.Identifier
             else getErrorMessage("идентификатор", token.type, token.index)
-//            else throw IllegalArgumentException("Expected: type <Identifier>, got <${token.type}> as position ${token.index}")
         }
         State.Identifier -> {
             return when (token.type) {
                 TokenType.Colon -> State.Colon
                 TokenType.Delimiter -> State.Delimiter
                 else -> getErrorMessage("двоеточие или точка с запятой", token.type, token.index)
-//                else -> throw IllegalArgumentException("Expected: colon or semicolon, got <${token.type}> as position ${token.index}")
             }
         }
         State.Colon -> return when (token.type) {
             TokenType.Type -> State.Type
             else -> getErrorMessage("тип переменной", token.type, token.index)
-//            else -> throw IllegalArgumentException("Expected: type of variable, got <${token.type}> as position ${token.index}")
         }
         State.Type -> return when (token.type) {
             TokenType.Semicolon -> State.Semicolon
             else -> getErrorMessage("точка с запятой", token.type, token.index)
-//            else -> throw IllegalArgumentException("Expected: semicolon, got <${token.type}> as position ${token.index}")
         }
         State.Semicolon -> return when (token.type) {
             TokenType.Identifier -> State.Identifier
             else -> getErrorMessage("идентификатор", token.type, token.index)
-//            else -> throw IllegalArgumentException("Expected: type <Identifier>, got <${token.type}> as position ${token.index}")
         }
     }
 }
