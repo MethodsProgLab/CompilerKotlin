@@ -2,6 +2,8 @@ package ru.sacmi5.compiler
 
 import javafx.geometry.Orientation
 import tornadofx.*
+import java.nio.file.Path
+import java.nio.file.Paths
 
 class CompilerView: View() {
     private val controller: CompilerController by inject()
@@ -82,9 +84,25 @@ class CompilerView: View() {
                         controller.sampleWithErrors()
                     }
                 }
+                item("Лексический сканнер") {
+                    action {
+                        controller.lexerScanner()
+                    }
+                }
+                item("Диагностика") {}
+                item("Нейтрализация") {}
                 item("Запустить") {
                     action {
                         controller.run()
+                    }
+                }
+            }
+            menu("Справка") {
+                item("Лексический сканнер") {
+                    action {
+                        ProcessBuilder("okular", "help.pdf")
+                            .directory(Paths.get("").toAbsolutePath().toFile())
+                            .start()
                     }
                 }
             }

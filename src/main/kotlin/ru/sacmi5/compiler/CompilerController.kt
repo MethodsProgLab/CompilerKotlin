@@ -143,18 +143,28 @@ class CompilerController : Controller() {
 
         val code = textArea.text
         val tokens = scanner(code)
+        val stringBuilder = StringBuilder()
 
         var state = State.Start
         errorsIndex.clear()
 
         for (i in tokens.indices) {
             state = try {
-                analyze(state, tokens[i])
+                val correctState = analyze(state, tokens[i])
+                stringBuilder.append("${tokens[i].value} ")
+
+                correctState
             } catch (e: IllegalArgumentException) {
                 addError("${e.message}")
                 errorsIndex.add(ErrorRange(tokens[i].index, tokens[i].index + tokens[i].value.length))
-                predictNextState(state, if (i + 1 !in tokens.indices) null else tokens[i + 1])
+                val predictedState = predictNextState(state, if (i + 1 !in tokens.indices) null else tokens[i + 1])
+
+                if (predictedState != state) {
+                    stringBuilder.append("${predictedState.toString().lowercase()} ")
+                }
+                predictedState
             }
+
         }
 
         if (state != State.Semicolon) {
@@ -163,6 +173,20 @@ class CompilerController : Controller() {
 
         if (errorsIndex.isEmpty()) {
             addError("Ошибок не найдено. Все хорошо! :)")
+        }
+
+        if (errorsIndex.isNotEmpty()) {
+            addError("Ожидалось следующее:\n$stringBuilder")
+        }
+    }
+
+    fun lexerScanner() {
+        val code = textArea.text
+        errorList.items.clear()
+
+        val tokens = scanner(code)
+        for (token in tokens) {
+            errorList.items.add(token.toString())
         }
     }
 }

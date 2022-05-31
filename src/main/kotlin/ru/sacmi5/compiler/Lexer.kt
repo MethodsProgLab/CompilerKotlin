@@ -1,7 +1,7 @@
 package ru.sacmi5.compiler
 
 enum class TokenType {
-    Keyword, Type, Identifier, Delimiter, Colon, Semicolon, Unknown
+    Keyword, Type, Identifier, Delimiter, Colon, Semicolon, Digit, Unknown
 }
 
 enum class State {
@@ -50,24 +50,30 @@ fun scanner(str: String): List<Token> {
             ',' -> tokens.add(Token(TokenType.Delimiter, char.toString(), index))
             ';' -> tokens.add(Token(TokenType.Semicolon, char.toString(), index))
             else -> {
-                if (char.isLetter()) {
-                    str.substring(index).takeWhile { it.isLetterOrDigit() }.let {
-                        toSkip += it.length - 1
+                when {
+                    char.isLetter() -> {
+                        str.substring(index).takeWhile { it.isLetterOrDigit() }.let {
+                            toSkip += it.length - 1
 
-                        val tokenType = when {
-                            isType(it) -> TokenType.Type
-                            isKeyword(it) -> TokenType.Keyword
-                            else -> TokenType.Identifier
-                        }
+                            val tokenType = when {
+                                isType(it) -> TokenType.Type
+                                isKeyword(it) -> TokenType.Keyword
+                                else -> TokenType.Identifier
+                            }
 
-                        tokens.add(
-                            Token(
-                                tokenType, it, index
+                            tokens.add(
+                                Token(
+                                    tokenType, it, index
+                                )
                             )
-                        )
+                        }
                     }
-                } else {
-                    tokens.add(Token(TokenType.Unknown, char.toString(), index))
+                    char.isDigit() -> {
+                        tokens.add(Token(TokenType.Digit, char.toString(), index))
+                    }
+                    else -> {
+                        tokens.add(Token(TokenType.Unknown, char.toString(), index))
+                    }
                 }
             }
 
@@ -113,3 +119,4 @@ fun analyze(state: State, token: Token): State {
         }
     }
 }
+
